@@ -4,8 +4,105 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz App</title>
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
+    <div class="starfield-background">
+        <div class="stars stars-slow"></div>
+        <div class="stars stars-medium"></div>
+        <div class="stars stars-fast"></div>
+
+    </div>
+    <section class="main-display  screen">
+        <header><h1 class="header">Quiz Quest</h1></header>
+            <div class="quiz-start container " >
+                <div class="start-quiz-card" >
+                    <div>Level</div>
+                    <div class="start-level">
+                        13
+                    </div>
+
+                </div>
+                <div class="start-quiz-card">
+                    <div>XP</div>
+                    <div class="xp-num">0/1300</div>
+                </div>
+                <div class="start-quiz-card">
+                    <div>
+                        High Score
+                    </div>
+                    <div class="high-score">
+                        45
+
+                    </div>
+                </div>
+                <div class="start-quiz-card">
+                    <div>Achievements</div>
+                    <div class="achievements-score">6</div>
+                </div>
+            </div>
+            <div class="space container">
+                <div class="quiz-actions-card" id="classic" >
+                    <div class="action-icon">🎯 </div>
+                    <div class="action-title">Classic</div>
+                    <div class="action-description">
+                        <p>10 questions, 15 seconds each</p>
+                    </div>
+                </div>
+                <div class="quiz-actions-card" id="time-attack" >
+                    <div class="action-icon">⏲️</div>
+                    <div class="action-title">Time Attack</div>
+                    <div class="action-description">
+                        <p>Answer as many as possible in 15 seconds</p>
+                    </div>
+                </div>
+                <div class="quiz-actions-card" id="survival">
+                    <div class="action-icon">🛡️</div>
+                    <div class="action-title">Survival</div>
+                    <div class="action-description">3 lives, Questions get harder</div>
+                </div>
+                <div class="quiz-actions-card" id="daily-challenge">
+                    <div class="action-icon">🏆</div>
+                    <div class="action-title">Daily Challenge</div>
+                    <div class="action-description">Specail questions, bonus rewards</div>
+                </div>
+
+             <button class="btn">View Profile</button>
+
+        </section>
+        <!-- Display quiz -->
+         <section class="display-quiz  screen hidden">
+              <div class="quiz-scores-display">
+                <div class="score">Score: <span class="display-score">0</span></div>
+                <div class="streak">🔥 Streak :<span class="display-streak">0</span></div>
+              </div>
+            <!-- questions -->
+            <div class="space display-questions ">
+                <p class="question-number"> </p>
+                <h2 id="question-text">What is the capital of France?</h2>
+            </div>
+            <div class="quiz-lifes" >
+                <div class="quiz-life" >50/50</div>
+                <div class="quiz-life">⏲️10s</div>
+                <div class="quiz-life">⏭️Skip</div>
+            </div>
+            <div class="space options">
+                <div class="answer-button">A. Berlin</div>
+                <div class="answer-button">B. Madrid</div>
+                <div class="answer-button">C. Paris</div>
+                <div class="answer-button">D. Rome</div>
+            </div>
+            <div >
+                <button class="btn next-ques" >Next Question</button>
+            </div>
+
+        </section>
+        
+        
+      </div>
+
+   
     
+    <script src="index.js"></script>
 </body>
 </html>
