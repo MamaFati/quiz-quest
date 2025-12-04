@@ -122,7 +122,7 @@
             </div>
 
         </section>
-        <section class="screen hidden final-score results">
+        <section class="screen hidden " id="final-score">
             <h2 class="results-title">Quest Completed</h2>
             <div class="results-display">
                 <div class="display-result">
@@ -130,7 +130,7 @@
                     <div class="result-label">Score</div>
                 </div>
                 <div class="display-result">
-                     <div class="result-value">90%</div>
+                     <div class="result-value accuracy">90%</div>
                     <div class="result-label"> Accuracy</div>
                 </div>
                 <div class="display-result">
@@ -142,18 +142,12 @@
                     <div class="result-label">XP Gained</div>
                 </div>
             </div>
-            <div class="final-box">
-                <h1 class="game-over-title">Game Over</h1>
-                <p class="final-points">Your Score: <span class="final-score-value">0</span></p>
-                <button class="play-again-btn">Play Again</button>
-            </div>
             <div >
-                <button class="btn play-again" onclick=playAgain() >Play Again</button>
+                <button class="btn play-again" onclick=showQuestion() >Play Again</button>
                  <button class="btn main-manu" >Main Manu</button>
             </div>
         </section>
         
-      </div>
 
    
     

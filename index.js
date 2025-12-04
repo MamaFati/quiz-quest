@@ -216,7 +216,8 @@ const nextQuestion = document.querySelector(".next-ques");
 const lifeLine5050 =document.querySelectorAll('.quiz-life')[0];
 const lifeLineAddTime = document.querySelectorAll(".quiz-life")[1];
 const lifeLineSkip = document.querySelectorAll(".quiz-life")[2];
-
+const finalScreen = document.querySelector("#final-score");
+const scoreValue = document.querySelector(".final-score-value");
 
 // animation star 
 document.addEventListener('DOMContentLoaded',()=>{
@@ -317,6 +318,13 @@ classic.onclick= function(){
 }
 // display question
 function showQuestion() {
+  // SAFETY CHECK
+  if (!selectedQuestions[currentQuestionIndex]) {
+    console.warn("No question found, ending quiz.");
+    endQuiz();
+    return;
+  }
+
   answerButtons.forEach((btn) => {
     btn.style.visibility = "visible";
     btn.classList.remove("correct", "wrong");
@@ -327,17 +335,16 @@ function showQuestion() {
   getQuestionNumber.textContent = `Question ${currentQuestionIndex + 1} of ${
     selectedQuestions.length
   }`;
+
   getQuestionText.textContent = currentQuestion.q;
 
-  // Answer labels (A, B, C, D)
   const labels = ["A", "B", "C", "D"];
 
   currentQuestion.opts.forEach((option, i) => {
     const label = answerButtons[i].querySelector(".answer-label");
     const text = answerButtons[i].querySelector(".answer-text");
-
-    label.textContent = labels[i]; // A, B, C, D
-    text.textContent = option; // Option text
+    label.textContent = labels[i];
+    text.textContent = option;
   });
 
   answerButtons.forEach((button, index) => {
@@ -347,6 +354,7 @@ function showQuestion() {
 
   startTimer();
 }
+ 
 
 function startTimer(){
    clearInterval(timerInterval);
@@ -434,15 +442,12 @@ nextQuestion.onclick=()=>{
   if (currentQuestionIndex < selectedQuestions.length) {
     showQuestion();
   } else {
-    endQuiz();
+    showFinalScore();
+
   }
 }
 function endQuiz() {
   clearInterval(timerInterval);
-
-  const finalScreen = document.querySelector(".final-score");
-  const scoreValue = document.querySelector(".final-score-value");
-
   scoreValue.textContent = score;
 
   document.querySelector(".display-quiz").classList.add("hidden");
@@ -471,10 +476,8 @@ function playAgain() {
     l.style.opacity = "1";
     l.style.pointerEvents = "auto";
   });
-
-  // RESET FINAL SCREEN + SHOW QUIZ
-  document.querySelector(".final-score").classList.add("hidden");
-  document.querySelector(".display-quiz").classList.remove("hidden");
+  
+  // showQuestion()
 
   // RESET UI TEXT
   document.querySelector(".display-score").textContent = 0;
@@ -485,9 +488,25 @@ function playAgain() {
   // PICK NEW RANDOM QUESTIONS
   const shuffled = getRandomQuestion([...allQuestions]);
   selectedQuestions.push(...shuffled.slice(0, 10));
-
+  console.log("go again")
   // START THE QUIZ AGAIN
   showQuestion();
+}
+function showFinalScore() {
+  clearInterval(timerInterval);
+
+  switchScreen(displayQuiz, finalScreen);
+
+  scoreValue.textContent = score;
+
+  // Update best streak
+  document.querySelector(".final-streak-value").textContent = streak;
+
+  // Accuracy (optional if you track correct answers)
+  const accuracy = Math.round((score / selectedQuestions.length) * 100);
+  document.querySelector(
+    ".accuracy"
+  ).textContent = accuracy + "%";
 }
 
 
