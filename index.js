@@ -1,27 +1,192 @@
 // quiz questions
 const questionDatabase = {
-            easy: [
-                { q: "What is 2 + 2?", opts: ["3", "4", "5", "6"], correct: 1, category: "Math" },
-                { q: "What color is the sky?", opts: ["Red", "Blue", "Green", "Yellow"], correct: 1, category: "Nature" },
-                { q: "How many days in a week?", opts: ["5", "6", "7", "8"], correct: 2, category: "Time" },
-                { q: "What is the capital of USA?", opts: ["New York", "Washington DC", "Los Angeles", "Chicago"], correct: 1, category: "Geography" },
-                { q: "How many continents are there?", opts: ["5", "6", "7", "8"], correct: 2, category: "Geography" }
-            ],
-            medium: [
-                { q: "What is the capital of France?", opts: ["London", "Berlin", "Paris", "Madrid"], correct: 2, category: "Geography" },
-                { q: "Which planet is known as the Red Planet?", opts: ["Venus", "Mars", "Jupiter", "Saturn"], correct: 1, category: "Science" },
-                { q: "Who painted the Mona Lisa?", opts: ["Van Gogh", "Picasso", "Da Vinci", "Michelangelo"], correct: 2, category: "Art" },
-                { q: "What is the largest ocean?", opts: ["Atlantic", "Indian", "Arctic", "Pacific"], correct: 3, category: "Geography" },
-                { q: "In which year did WW2 end?", opts: ["1943", "1944", "1945", "1946"], correct: 2, category: "History" }
-            ],
-            hard: [
-                { q: "What is the speed of light in vacuum?", opts: ["299,792 km/s", "199,792 km/s", "399,792 km/s", "99,792 km/s"], correct: 0, category: "Physics" },
-                { q: "What is the atomic number of Gold?", opts: ["47", "79", "92", "118"], correct: 1, category: "Chemistry" },
-                { q: "In what year did the Byzantine Empire fall?", opts: ["1453", "1492", "1066", "1215"], correct: 0, category: "History" },
-                { q: "Who wrote 'One Hundred Years of Solitude'?", opts: ["Borges", "Garcia Marquez", "Neruda", "Allende"], correct: 1, category: "Literature" },
-                { q: "What is the smallest country by area?", opts: ["Monaco", "Vatican City", "San Marino", "Liechtenstein"], correct: 1, category: "Geography" }
-            ]
-        };
+  easy: [
+    {
+      q: "What is 2 + 2?",
+      opts: ["3", "4", "5", "6"],
+      correct: 1,
+      category: "Math",
+    },
+    {
+      q: "What color is the sky?",
+      opts: ["Red", "Blue", "Green", "Yellow"],
+      correct: 1,
+      category: "Nature",
+    },
+    {
+      q: "How many days in a week?",
+      opts: ["5", "6", "7", "8"],
+      correct: 2,
+      category: "Time",
+    },
+    {
+      q: "What is the capital of USA?",
+      opts: ["New York", "Washington DC", "Los Angeles", "Chicago"],
+      correct: 1,
+      category: "Geography",
+    },
+    {
+      q: "How many continents are there?",
+      opts: ["5", "6", "7", "8"],
+      correct: 2,
+      category: "Geography",
+    },
+    {
+      q: "How many legs does a spider have?",
+      opts: ["6", "8", "10", "12"],
+      correct: 1,
+      category: "Animals",
+    },
+    {
+      q: "Which planet do we live on?",
+      opts: ["Mars", "Earth", "Venus", "Jupiter"],
+      correct: 1,
+      category: "Science",
+    },
+    {
+      q: "What do bees make?",
+      opts: ["Milk", "Honey", "Water", "Juice"],
+      correct: 1,
+      category: "Nature",
+    },
+    {
+      q: "What shape has 3 sides?",
+      opts: ["Square", "Triangle", "Circle", "Hexagon"],
+      correct: 1,
+      category: "Math",
+    },
+    {
+      q: "What is H2O commonly known as?",
+      opts: ["Fire", "Salt", "Water", "Air"],
+      correct: 2,
+      category: "Science",
+    },
+  ],
+  medium: [
+    {
+      q: "What is the capital of France?",
+      opts: ["London", "Berlin", "Paris", "Madrid"],
+      correct: 2,
+      category: "Geography",
+    },
+    {
+      q: "Which planet is known as the Red Planet?",
+      opts: ["Venus", "Mars", "Jupiter", "Saturn"],
+      correct: 1,
+      category: "Science",
+    },
+    {
+      q: "Who painted the Mona Lisa?",
+      opts: ["Van Gogh", "Picasso", "Da Vinci", "Michelangelo"],
+      correct: 2,
+      category: "Art",
+    },
+    {
+      q: "What is the largest ocean?",
+      opts: ["Atlantic", "Indian", "Arctic", "Pacific"],
+      correct: 3,
+      category: "Geography",
+    },
+    {
+      q: "In which year did WW2 end?",
+      opts: ["1943", "1944", "1945", "1946"],
+      correct: 2,
+      category: "History",
+    },
+    {
+      q: "Which gas do plants absorb from the atmosphere?",
+      opts: ["Oxygen", "Nitrogen", "Carbon Dioxide", "Helium"],
+      correct: 2,
+      category: "Science",
+    },
+    {
+      q: "Who invented the telephone?",
+      opts: ["Edison", "Bell", "Tesla", "Newton"],
+      correct: 1,
+      category: "History",
+    },
+    {
+      q: "Which continent is the Sahara Desert located on?",
+      opts: ["Asia", "Africa", "Australia", "South America"],
+      correct: 1,
+      category: "Geography",
+    },
+    {
+      q: "Which language is the most spoken worldwide?",
+      opts: ["English", "Spanish", "Mandarin", "Hindi"],
+      correct: 2,
+      category: "Culture",
+    },
+    {
+      q: "What is the boiling point of water?",
+      opts: ["100°C", "90°C", "80°C", "110°C"],
+      correct: 0,
+      category: "Science",
+    },
+  ],
+  hard: [
+    {
+      q: "What is the speed of light in vacuum?",
+      opts: ["299,792 km/s", "199,792 km/s", "399,792 km/s", "99,792 km/s"],
+      correct: 0,
+      category: "Physics",
+    },
+    {
+      q: "What is the atomic number of Gold?",
+      opts: ["47", "79", "92", "118"],
+      correct: 1,
+      category: "Chemistry",
+    },
+    {
+      q: "In what year did the Byzantine Empire fall?",
+      opts: ["1453", "1492", "1066", "1215"],
+      correct: 0,
+      category: "History",
+    },
+    {
+      q: "Who wrote 'One Hundred Years of Solitude'?",
+      opts: ["Borges", "Garcia Marquez", "Neruda", "Allende"],
+      correct: 1,
+      category: "Literature",
+    },
+    {
+      q: "What is the smallest country by area?",
+      opts: ["Monaco", "Vatican City", "San Marino", "Liechtenstein"],
+      correct: 1,
+      category: "Geography",
+    },
+    {
+      q: "What is the powerhouse of the cell?",
+      opts: ["Nucleus", "Ribosome", "Mitochondria", "Golgi Body"],
+      correct: 2,
+      category: "Biology",
+    },
+    {
+      q: "Who formulated the laws of planetary motion?",
+      opts: ["Kepler", "Newton", "Galileo", "Einstein"],
+      correct: 0,
+      category: "Astronomy",
+    },
+    {
+      q: "What is the capital of Iceland?",
+      opts: ["Oslo", "Helsinki", "Reykjavik", "Copenhagen"],
+      correct: 2,
+      category: "Geography",
+    },
+    {
+      q: "What is the chemical formula for table salt?",
+      opts: ["CO2", "HCl", "NaCl", "KCl"],
+      correct: 2,
+      category: "Chemistry",
+    },
+    {
+      q: "Which ancient empire built Machu Picchu?",
+      opts: ["Mayan", "Aztec", "Incan", "Roman"],
+      correct: 2,
+      category: "History",
+    },
+  ],
+};
 
 
 let currentQuestionIndex = 0;
@@ -151,31 +316,38 @@ classic.onclick= function(){
     
 }
 // display question
-function showQuestion(){
+function showQuestion() {
   answerButtons.forEach((btn) => {
-    btn.style.visibility = "visible"; // restore 50/50 hidden answers
+    btn.style.visibility = "visible";
+    btn.classList.remove("correct", "wrong");
   });
 
-     let currentQuestion = selectedQuestions[currentQuestionIndex];
-    //   getQuestionNumber.textContext = `Question ${currentQuestion + 1} of ${seletedQuestions.length}`;
-    getQuestionNumber.textContent= "Question" + " " + (currentQuestionIndex + 1) + " " + "of" + " " + selectedQuestions.length;
-        getQuestionText.textContent = currentQuestion.q;
+  let currentQuestion = selectedQuestions[currentQuestionIndex];
 
-        currentQuestion.opts.forEach((option, i) =>{
-            answerButtons[i].textContent = option;
-            // console.log(option);
+  getQuestionNumber.textContent = `Question ${currentQuestionIndex + 1} of ${
+    selectedQuestions.length
+  }`;
+  getQuestionText.textContent = currentQuestion.q;
 
-        })
-        // getDisplayScore.textContent = score;
-        answerButtons.forEach((button, index) => {
-          button.addEventListener("click", () => {
-            handleAnswer(index);
-          });
-          button.style.backgroundColor = "";
-          button.disabled = false;
-        });
-        startTimer();
+  // Answer labels (A, B, C, D)
+  const labels = ["A", "B", "C", "D"];
+
+  currentQuestion.opts.forEach((option, i) => {
+    const label = answerButtons[i].querySelector(".answer-label");
+    const text = answerButtons[i].querySelector(".answer-text");
+
+    label.textContent = labels[i]; // A, B, C, D
+    text.textContent = option; // Option text
+  });
+
+  answerButtons.forEach((button, index) => {
+    button.onclick = () => handleAnswer(index);
+    button.disabled = false;
+  });
+
+  startTimer();
 }
+
 function startTimer(){
    clearInterval(timerInterval);
   timeLeft = 15;
@@ -214,10 +386,11 @@ function updateTimerDisplay() {
       currentQuestionIndex++;
 
       if (currentQuestionIndex < selectedQuestions.length) {
-        showQuestion(); // load next
+        showQuestion();  
       } else {
         endQuiz();
       }
+      answerButtons.forEach((btn) => btn.classList.remove("correct", "wrong"));
     }, 1000);
   }
 }
@@ -229,14 +402,17 @@ function handleAnswer(selectedIndex){
     if (selectedIndex === correctIndex) {
       score += 10;
       streak++;
-      answerButtons[selectedIndex].style.backgroundColor = "green";
+      answerButtons.forEach((btn) => btn.classList.remove("correct", "wrong"));
+       answerButtons[selectedIndex].classList.add("correct");
       triggerLightning();  
     } else {
       streak = 0;
+      answerButtons.forEach((btn) => btn.classList.remove("correct", "wrong"));
       if (selectedIndex >= 0) {
-        answerButtons[selectedIndex].style.backgroundColor = "red";
+         
+         answerButtons[selectedIndex].classList.add("wrong");
       }
-      answerButtons[correctIndex].style.backgroundColor = "green";
+      answerButtons[correctIndex].classList.add("correct");
     }
 
     getDisplayScore.textContent = score;
@@ -253,6 +429,7 @@ nextQuestion.onclick=()=>{
   clearInterval(timerInterval);
 
   currentQuestionIndex++;
+  answerButtons.forEach((btn) => btn.classList.remove("correct", "wrong"));
 
   if (currentQuestionIndex < selectedQuestions.length) {
     showQuestion();
