@@ -15,33 +15,33 @@
     </div>
     <section class="main-display  screen">
         <header><h1 class="header">Quiz Quest</h1></header>
-            <div class="quiz-start container " >
+            <div class="quiz-start" >
                 <div class="start-quiz-card" >
-                    <div>Level</div>
-                    <div class="start-level">
-                        13
+                    <div class="start-quiz-label">Level</div>
+                    <div class="start-quiz-value start-level">
+                        1
                     </div>
 
                 </div>
                 <div class="start-quiz-card">
-                    <div>XP</div>
-                    <div class="xp-num">0/1300</div>
+                    <div class="start-quiz-label">XP</div>
+                    <div class="start-quiz-value xp-num">0/1300</div>
                 </div>
                 <div class="start-quiz-card">
-                    <div>
+                    <div class="start-quiz-label start">
                         High Score
                     </div>
-                    <div class="high-score">
+                    <div class="start-quiz-value high-score">
                         45
 
                     </div>
                 </div>
-                <div class="start-quiz-card">
-                    <div>Achievements</div>
-                    <div class="achievements-score">6</div>
+                <div class=" start-quiz-card">
+                    <div class="start-quiz-label">Achievements</div>
+                    <div class="start-quiz-value achievements-score">6</div>
                 </div>
             </div>
-            <div class="space container">
+            <div class="space quiz-card">
                 <div class="quiz-actions-card" id="classic" >
                     <div class="action-icon">🎯 </div>
                     <div class="action-title">Classic</div>
@@ -66,20 +66,30 @@
                     <div class="action-title">Daily Challenge</div>
                     <div class="action-description">Specail questions, bonus rewards</div>
                 </div>
-
-             <button class="btn">View Profile</button>
+            </div>
+            <button class="btn">View Profile</button>
 
         </section>
         <!-- Display quiz -->
          <section class="display-quiz  screen hidden">
+            </div> -->
+            <div class="lightning-effect"></div>
+
               <div class="quiz-scores-display">
                 <div class="score">Score: <span class="display-score">0</span></div>
                 <div class="streak">🔥 Streak :<span class="display-streak">0</span></div>
+                <div class="combo-fire"></div>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill"></div>
               </div>
             <!-- questions -->
             <div class="space display-questions ">
-                <p class="question-number"> </p>
-                <h2 id="question-text">What is the capital of France?</h2>
+                <div><p class="question-number"> </p>
+                <h2 id="question-text"></h2></div>
+                <div class="timer">
+                    <div class="timer-text">15</div>
+                </div>
             </div>
             <div class="quiz-lifes" >
                 <div class="quiz-life" >50/50</div>
@@ -87,17 +97,46 @@
                 <div class="quiz-life">⏭️Skip</div>
             </div>
             <div class="space options">
-                <div class="answer-button">A. Berlin</div>
-                <div class="answer-button">B. Madrid</div>
-                <div class="answer-button">C. Paris</div>
-                <div class="answer-button">D. Rome</div>
+                <div class="answer-button"></div>
+                <div class="answer-button"></div>
+                <div class="answer-button"> </div>
+                <div class="answer-button"></div>
             </div>
             <div >
                 <button class="btn next-ques" >Next Question</button>
             </div>
 
         </section>
-        
+        <section class="screen hidden final-score results">
+            <h2 class="results-title">Quest Completed</h2>
+            <div class="results-display">
+                <div class="display-result">
+                    <div class="result-value final-score-value"></div>
+                    <div class="result-label">Score</div>
+                </div>
+                <div class="display-result">
+                     <div class="result-value">90%</div>
+                    <div class="result-label"> Accuracy</div>
+                </div>
+                <div class="display-result">
+                     <div class="result-value final-streak-value"></div>
+                    <div class="result-label">Best Streak</div>
+                </div>
+                <div class="display-result">
+                     <div class="result-value">+195</div>
+                    <div class="result-label">XP Gained</div>
+                </div>
+            </div>
+            <div class="final-box">
+                <h1 class="game-over-title">Game Over</h1>
+                <p class="final-points">Your Score: <span class="final-score-value">0</span></p>
+                <button class="play-again-btn">Play Again</button>
+            </div>
+            <div >
+                <button class="btn play-again" onclick=playAgain() >Play Again</button>
+                 <button class="btn main-manu" >Main Manu</button>
+            </div>
+        </section>
         
       </div>
 

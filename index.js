@@ -27,6 +27,10 @@ const questionDatabase = {
 let currentQuestionIndex = 0;
 let score =0; 
 let streak =0;
+let timeLeft = 15;
+let timerInterval = null;
+let health = 100;
+
 const selectedQuestions=[]
 const allQuestions = [
      ...questionDatabase.easy ,
@@ -42,10 +46,13 @@ let getQuestionNumber =document.querySelector('.question-number');
 const answerButtons = document.querySelectorAll('.answer-button');
 const getQuestionText = document.querySelector('#question-text');
 const nextQuestion = document.querySelector(".next-ques");
+const lifeLine5050 =document.querySelectorAll('.quiz-life')[0];
+const lifeLineAddTime = document.querySelectorAll(".quiz-life")[1];
+const lifeLineSkip = document.querySelectorAll(".quiz-life")[2];
+
 
 // animation star 
 document.addEventListener('DOMContentLoaded',()=>{
-  // fuction to create stars
   function createStar(
     layerClass,
     count,
@@ -58,17 +65,13 @@ document.addEventListener('DOMContentLoaded',()=>{
     for (let i = 0; i < count; i++) {
       const star = document.createElement("div");
       star.classList.add("star");
-
       const x = Math.random() * 150;
       const y = Math.random() * 150;
-      // Random size
       const size = Math.random() * (maxSize - minSize) + minSize;
-      // Random animation
       const duration =
         Math.random() * (maxDuration - minDuration) + minDuration;
       const delay = Math.random() * 10;
 
-      // apply styles
       star.style.left = x + "vw";
       star.style.top = y + "vh";
       star.style.width = size + "px";
@@ -85,7 +88,27 @@ document.addEventListener('DOMContentLoaded',()=>{
    createStar(".stars-fast", 70, 3, 5, 10, 90);
 })
 
+function updateComboFire() {
+  const fire = document.querySelector(".combo-fire");
 
+  if (streak >= 3) {
+    fire.style.display = "block";
+  } else {
+    fire.style.display = "none";
+  }
+}
+
+function triggerLightning() {
+  const lightning = document.querySelector(".lightning-effect");
+  lightning.innerHTML = ""; // reset
+
+  const flash = document.createElement("div");
+  flash.classList.add("lightning-flash");
+
+  lightning.appendChild(flash);
+
+  setTimeout(() => flash.remove(), 400);
+}
 
 function getRandomQuestion(array){
      for(let i = array.length -1; i>0; i--){
@@ -99,18 +122,22 @@ classic.onclick= function(){
   // Show quiz section
   getQuiz.classList.remove("hidden");
 
-  // Hide landing page — choose ONE of these two lines:
+   
   getMain.classList.add("hidden");
 
    const shuffled = getRandomQuestion([...allQuestions]);
    selectedQuestions.push(...shuffled.slice(0,10));
    console.log(selectedQuestions);
     showQuestion();
-    // handleAnswer();
+    
     
 }
 // display question
 function showQuestion(){
+  answerButtons.forEach((btn) => {
+    btn.style.visibility = "visible"; // restore 50/50 hidden answers
+  });
+
      let currentQuestion = selectedQuestions[currentQuestionIndex];
     //   getQuestionNumber.textContext = `Question ${currentQuestion + 1} of ${seletedQuestions.length}`;
     getQuestionNumber.textContent= "Question" + " " + (currentQuestionIndex + 1) + " " + "of" + " " + selectedQuestions.length;
@@ -125,31 +152,208 @@ function showQuestion(){
         answerButtons.forEach((button, index) => {
           button.addEventListener("click", () => {
             handleAnswer(index);
-            console.log("Button clicked:", index);
           });
           button.style.backgroundColor = "";
           button.disabled = false;
         });
+        startTimer();
+}
+function startTimer(){
+   clearInterval(timerInterval);
+  timeLeft = 15;
+  updateTimerDisplay();
+   
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    updateTimerDisplay();
 
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      handleAnswer(-1);  
+    }
+  }, 1000);
+}
+function updateTimerDisplay() {
+  const timerText = document.querySelector(".timer-text");
+  const timerCircle = document.querySelector(".timer");
+
+  timerText.textContent = timeLeft;
+
+  // Visual countdown ring (0% → 100%)
+  const percent = ((15 - timeLeft) / 15) * 100;
+  timerCircle.style.setProperty("--progress", percent + "%");
+
+  // Change color when low
+  if (timeLeft <= 5) {
+    timerText.style.color = "#f87171";
+  } else {
+    timerText.style.color = "white";
+  }
+  if(timeLeft === 0){
+    clearInterval(timerInterval);
+    // currentQuestionIndex++;
+    setTimeout(() => {
+      currentQuestionIndex++;
+
+      if (currentQuestionIndex < selectedQuestions.length) {
+        showQuestion(); // load next
+      } else {
+        endQuiz();
+      }
+    }, 1000);
+  }
 }
 function handleAnswer(selectedIndex){
     const currentQuestion = selectedQuestions[currentQuestionIndex];
     const correctIndex = currentQuestion.correct;
     answerButtons.forEach((btn) => (btn.disabled = true));
 
-    if(selectedIndex === correctIndex){
-        score +=10;
-        streak = score+10;
-        
-        answerButtons[selectedIndex].style.backgroundColor = "green";
+    if (selectedIndex === correctIndex) {
+      score += 10;
+      streak++;
+      answerButtons[selectedIndex].style.backgroundColor = "green";
+      triggerLightning();  
     } else {
+      streak = 0;
+      if (selectedIndex >= 0) {
         answerButtons[selectedIndex].style.backgroundColor = "red";
-        answerButtons[correctIndex].style.backgroundColor = "green";
+      }
+      answerButtons[correctIndex].style.backgroundColor = "green";
     }
+
     getDisplayScore.textContent = score;
     getDisplayStreak.textContent = streak;
+    updateComboFire();
+
+    const progressPercent = ((currentQuestionIndex+1)/selectedQuestions.length)*100;
+    document.querySelector(".progress-fill").style.width =
+      progressPercent + "%";
+
+
+}
+nextQuestion.onclick=()=>{
+  clearInterval(timerInterval);
+
+  currentQuestionIndex++;
+
+  if (currentQuestionIndex < selectedQuestions.length) {
+    showQuestion();
+  } else {
+    endQuiz();
+  }
+}
+function endQuiz() {
+  clearInterval(timerInterval);
+
+  const finalScreen = document.querySelector(".final-score");
+  const scoreValue = document.querySelector(".final-score-value");
+
+  scoreValue.textContent = score;
+
+  document.querySelector(".display-quiz").classList.add("hidden");
+  finalScreen.classList.remove("hidden");
+}
+
+function playAgain() {
+  // Stop timer
+  clearInterval(timerInterval);
+
+  // RESET ALL CORE VARIABLES
+  score = 0;
+  streak = 0;
+  currentQuestionIndex = 0;
+  timeLeft = 15;
+  selectedQuestions.length = 0; // clears previous questions
+
+  // RESET LIFELINES
+  used5050 = false;
+  usedAddTime = false;
+  usedSkip = false;
+
+  // Reset lifeline button styles
+  const lifelines = document.querySelectorAll(".quiz-life");
+  lifelines.forEach((l) => {
+    l.style.opacity = "1";
+    l.style.pointerEvents = "auto";
+  });
+
+  // RESET FINAL SCREEN + SHOW QUIZ
+  document.querySelector(".final-score").classList.add("hidden");
+  document.querySelector(".display-quiz").classList.remove("hidden");
+
+  // RESET UI TEXT
+  document.querySelector(".display-score").textContent = 0;
+  document.querySelector(".display-streak").textContent = 0;
+
+  document.querySelector(".progress-fill").style.width = "0%";
+
+  // PICK NEW RANDOM QUESTIONS
+  const shuffled = getRandomQuestion([...allQuestions]);
+  selectedQuestions.push(...shuffled.slice(0, 10));
+
+  // START THE QUIZ AGAIN
+  showQuestion();
 }
 
 
 
- 
+ let used5050 = false;
+
+ lifeLine5050.onclick = () => {
+   if (used5050) return; // prevent reuse
+   used5050 = true;
+
+   const currentQuestion = selectedQuestions[currentQuestionIndex];
+   const correctIndex = currentQuestion.correct;
+
+   // collect wrong answers
+   let wrongIndexes = [];
+   answerButtons.forEach((btn, index) => {
+     if (index !== correctIndex) wrongIndexes.push(index);
+   });
+
+   // remove 2 random wrong answers
+   wrongIndexes.sort(() => Math.random() - 0.5);
+   const removeTwo = wrongIndexes.slice(0, 2);
+
+   removeTwo.forEach((index) => {
+     answerButtons[index].style.visibility = "hidden";
+   });
+
+   // visually disable the lifeline
+   lifeLine5050.style.opacity = 0.5;
+   lifeLine5050.style.pointerEvents = "none";
+ };
+
+ let usedAddTime = false;
+
+ lifeLineAddTime.onclick = () => {
+   if (usedAddTime) return;
+   usedAddTime = true;
+
+   timeLeft += 10; // add extra seconds
+   updateTimerDisplay(); // refresh UI
+
+   // disable button
+   lifeLineAddTime.style.opacity = 0.5;
+   lifeLineAddTime.style.pointerEvents = "none";
+ };
+ let usedSkip = false;
+
+ lifeLineSkip.onclick = () => {
+   if (usedSkip) return;
+   usedSkip = true;
+
+   clearInterval(timerInterval);
+
+   currentQuestionIndex++;
+
+   if (currentQuestionIndex < selectedQuestions.length) {
+     showQuestion();
+   } else {
+     endQuiz();
+   }
+
+   lifeLineSkip.style.opacity = 0.5;
+   lifeLineSkip.style.pointerEvents = "none";
+ };
