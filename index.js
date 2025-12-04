@@ -43,6 +43,8 @@ let getMain = document.querySelector(".main-display");
 let getDisplayScore = document.querySelector('.display-score');
 let getDisplayStreak = document.querySelector(".display-streak");
 let getQuestionNumber =document.querySelector('.question-number');
+const mainDisplay = document.querySelector(".main-display");
+const displayQuiz = document.querySelector(".display-quiz");
 const answerButtons = document.querySelectorAll('.answer-button');
 const getQuestionText = document.querySelector('#question-text');
 const nextQuestion = document.querySelector(".next-ques");
@@ -98,6 +100,22 @@ function updateComboFire() {
   }
 }
 
+function switchScreen(oldScreen, newScreen) {
+  oldScreen.classList.remove("active");
+  oldScreen.classList.add("exit");
+
+  setTimeout(() => {
+    oldScreen.classList.add("hidden");
+    oldScreen.classList.remove("exit");
+
+    newScreen.classList.remove("hidden");
+    setTimeout(() => {
+      newScreen.classList.add("active");
+    }, 10);
+  }, 10); 
+}
+
+
 function triggerLightning() {
   const lightning = document.querySelector(".lightning-effect");
   lightning.innerHTML = ""; // reset
@@ -127,7 +145,7 @@ classic.onclick= function(){
 
    const shuffled = getRandomQuestion([...allQuestions]);
    selectedQuestions.push(...shuffled.slice(0,10));
-   console.log(selectedQuestions);
+    switchScreen(mainDisplay, displayQuiz);
     showQuestion();
     
     
