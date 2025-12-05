@@ -187,15 +187,16 @@ const questionDatabase = {
     },
   ],
 };
+//**** questions database *****//
 
 
+// ***** Global variables ***//
 let currentQuestionIndex = 0;
 let score =0; 
 let streak =0;
 let timeLeft = 15;
 let timerInterval = null;
 let health = 100;
-
 const selectedQuestions=[]
 const allQuestions = [
      ...questionDatabase.easy ,
@@ -216,10 +217,10 @@ const nextQuestion = document.querySelector(".next-ques");
 const lifeLine5050 =document.querySelectorAll('.quiz-life')[0];
 const lifeLineAddTime = document.querySelectorAll(".quiz-life")[1];
 const lifeLineSkip = document.querySelectorAll(".quiz-life")[2];
-const finalScreen = document.querySelector("#final-score");
+const finalScreen = document.querySelector(".final-score");
 const scoreValue = document.querySelector(".final-score-value");
 
-// animation star 
+//**** Star Animation  ****// 
 document.addEventListener('DOMContentLoaded',()=>{
   function createStar(
     layerClass,
@@ -256,6 +257,8 @@ document.addEventListener('DOMContentLoaded',()=>{
    createStar(".stars-fast", 70, 3, 5, 10, 90);
 })
 
+//**** streack fire ****/ 
+
 function updateComboFire() {
   const fire = document.querySelector(".combo-fire");
 
@@ -266,6 +269,7 @@ function updateComboFire() {
   }
 }
 
+//***** Chane Screens *****//
 function switchScreen(oldScreen, newScreen) {
   oldScreen.classList.remove("active");
   oldScreen.classList.add("exit");
@@ -281,10 +285,10 @@ function switchScreen(oldScreen, newScreen) {
   }, 10); 
 }
 
-
+//**** Animated lighting */ 
 function triggerLightning() {
   const lightning = document.querySelector(".lightning-effect");
-  lightning.innerHTML = ""; // reset
+  lightning.innerHTML = "";  
 
   const flash = document.createElement("div");
   flash.classList.add("lightning-flash");
@@ -294,6 +298,7 @@ function triggerLightning() {
   setTimeout(() => flash.remove(), 400);
 }
 
+//***** Generate questions randomly */ 
 function getRandomQuestion(array){
      for(let i = array.length -1; i>0; i--){
           const text = Math.floor(Math.random()*(i+1));
@@ -301,14 +306,9 @@ function getRandomQuestion(array){
      }
      return array;
 }
+
+//***** Logic for click classic button *****/
 classic.onclick= function(){
-  classic.textContent = "Classic Button";
-  // Show quiz section
-  getQuiz.classList.remove("hidden");
-
-   
-  getMain.classList.add("hidden");
-
    const shuffled = getRandomQuestion([...allQuestions]);
    selectedQuestions.push(...shuffled.slice(0,10));
     switchScreen(mainDisplay, displayQuiz);
@@ -316,11 +316,10 @@ classic.onclick= function(){
     
     
 }
-// display question
+//**** Display Questions */
 function showQuestion() {
-  // SAFETY CHECK
   if (!selectedQuestions[currentQuestionIndex]) {
-    console.warn("No question found, ending quiz.");
+    console.log("No question found, ending quiz.");
     endQuiz();
     return;
   }
@@ -351,11 +350,11 @@ function showQuestion() {
     button.onclick = () => handleAnswer(index);
     button.disabled = false;
   });
-
+  nextQuestion.style.display = "none";
   startTimer();
 }
  
-
+//***** Timer function *****/ 
 function startTimer(){
    clearInterval(timerInterval);
   timeLeft = 15;
@@ -371,17 +370,17 @@ function startTimer(){
     }
   }, 1000);
 }
+//***** Update Timer function *****/
 function updateTimerDisplay() {
   const timerText = document.querySelector(".timer-text");
   const timerCircle = document.querySelector(".timer");
 
   timerText.textContent = timeLeft;
-
-  // Visual countdown ring (0% → 100%)
+ 
   const percent = ((15 - timeLeft) / 15) * 100;
   timerCircle.style.setProperty("--progress", percent + "%");
 
-  // Change color when low
+   
   if (timeLeft <= 5) {
     timerText.style.color = "#f87171";
   } else {
@@ -389,7 +388,6 @@ function updateTimerDisplay() {
   }
   if(timeLeft === 0){
     clearInterval(timerInterval);
-    // currentQuestionIndex++;
     setTimeout(() => {
       currentQuestionIndex++;
 
@@ -402,6 +400,8 @@ function updateTimerDisplay() {
     }, 1000);
   }
 }
+
+//*****   *****/
 function handleAnswer(selectedIndex){
     const currentQuestion = selectedQuestions[currentQuestionIndex];
     const correctIndex = currentQuestion.correct;
@@ -431,8 +431,10 @@ function handleAnswer(selectedIndex){
     document.querySelector(".progress-fill").style.width =
       progressPercent + "%";
 
-
+    nextQuestion.style.display = "inline";
 }
+
+//*****  *****/
 nextQuestion.onclick=()=>{
   clearInterval(timerInterval);
 
@@ -446,6 +448,8 @@ nextQuestion.onclick=()=>{
 
   }
 }
+
+//***** Timer function *****/
 function endQuiz() {
   clearInterval(timerInterval);
   scoreValue.textContent = score;
@@ -455,15 +459,20 @@ function endQuiz() {
 }
 
 function playAgain() {
-  // Stop timer
-  clearInterval(timerInterval);
+ clearInterval(timerInterval);
 
-  // RESET ALL CORE VARIABLES
-  score = 0;
-  streak = 0;
-  currentQuestionIndex = 0;
-  timeLeft = 15;
-  selectedQuestions.length = 0; // clears previous questions
+ score = 0;
+ streak = 0;
+ currentQuestionIndex = 0;
+ selectedQuestions.length = 0;
+
+ document.querySelector(".progress-fill").style.width = "0%";
+ document.querySelector(".display-score").textContent = 0;
+ document.querySelector(".display-streak").textContent = 0;
+  //  let currentQuestion = selectedQuestions[currentQuestionIndex];
+
+   
+    // getQuestionText.textContent = currentQuestion.q;
 
   // RESET LIFELINES
   used5050 = false;
@@ -476,40 +485,65 @@ function playAgain() {
     l.style.opacity = "1";
     l.style.pointerEvents = "auto";
   });
-  
-  // showQuestion()
-
-  // RESET UI TEXT
-  document.querySelector(".display-score").textContent = 0;
-  document.querySelector(".display-streak").textContent = 0;
-
-  document.querySelector(".progress-fill").style.width = "0%";
-
   // PICK NEW RANDOM QUESTIONS
   const shuffled = getRandomQuestion([...allQuestions]);
   selectedQuestions.push(...shuffled.slice(0, 10));
+
+  getQuestionNumber.textContent = `Question ${currentQuestionIndex + 1} of ${
+    selectedQuestions.length
+  }`;
   console.log("go again")
   // START THE QUIZ AGAIN
-  showQuestion();
+  switchScreen(finalScreen, displayQuiz);
 }
+
+//*****  *******/ 
 function showFinalScore() {
   clearInterval(timerInterval);
 
   switchScreen(displayQuiz, finalScreen);
-
   scoreValue.textContent = score;
-
-  // Update best streak
   document.querySelector(".final-streak-value").textContent = streak;
 
-  // Accuracy (optional if you track correct answers)
+  // Accuracy
   const accuracy = Math.round((score / selectedQuestions.length) * 100);
   document.querySelector(
     ".accuracy"
   ).textContent = accuracy + "%";
 }
 
+//*****  *******/ 
+function showMainManu() {
+  clearInterval(timerInterval);
 
+  
+  score = 0;
+  streak = 0;
+  currentQuestionIndex = 0;
+  selectedQuestions.length = 0;
+
+  document.querySelector(".progress-fill").style.width = "0%";
+  document.querySelector(".display-score").textContent = 0;
+  document.querySelector(".display-streak").textContent = 0;
+
+  switchScreen(finalScreen, mainDisplay);
+}
+// ******  ****/
+function displayProfile(){
+  alert(`📊Profile stats
+
+    🎮 Level: 1
+    ✨ Total XP: 1202
+    🏆 High Score: 72
+    🔥 Best Sreak: ${streak}
+    📈 Game Played: 8
+    ✅ Total Correct: 45
+    ❓ Total Questions: 10
+    🎯 Overall Accuracy: 90%
+    🏅 Achievement: 6/8
+
+    `)
+}
 
  let used5050 = false;
 
@@ -534,7 +568,6 @@ function showFinalScore() {
      answerButtons[index].style.visibility = "hidden";
    });
 
-   // visually disable the lifeline
    lifeLine5050.style.opacity = 0.5;
    lifeLine5050.style.pointerEvents = "none";
  };

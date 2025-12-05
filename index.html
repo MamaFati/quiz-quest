@@ -67,7 +67,7 @@
                     <div class="action-description">Specail questions, bonus rewards</div>
                 </div>
             </div>
-            <button class="btn">View Profile</button>
+            <button class="btn" onclick="displayProfile()">View Profile</button>
 
         </section>
         <!-- Display quiz -->
@@ -122,8 +122,8 @@
             </div>
 
         </section>
-        <section class="screen hidden " id="final-score">
-            <h2 class="results-title">Quest Completed</h2>
+        <section class="screen hidden final-score" >
+            <h2 class="header">Quest Completed</h2>
             <div class="results-display">
                 <div class="display-result">
                     <div class="result-value final-score-value"></div>
@@ -143,8 +143,8 @@
                 </div>
             </div>
             <div >
-                <button class="btn play-again" onclick=showQuestion() >Play Again</button>
-                 <button class="btn main-manu" >Main Manu</button>
+                <button class="btn play-again" onclick="playAgain()" >Play Again</button>
+                 <button class="btn main-manu" onclick="showMainManu()" >Main Manu</button>
             </div>
         </section>
         
