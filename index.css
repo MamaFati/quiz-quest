@@ -722,5 +722,9 @@ body{
 .btn{
     left: 10%;
 }
+#question-text{
+    font-size: 1.0rem;
+     
+}
     
 }
