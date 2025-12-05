@@ -287,15 +287,26 @@ function switchScreen(oldScreen, newScreen) {
 
 //**** Animated lighting */ 
 function triggerLightning() {
-  const lightning = document.querySelector(".lightning-effect");
-  lightning.innerHTML = "";  
+   const lightning = document.createElement("div");
+   lightning.className = "lightning-effect";
 
-  const flash = document.createElement("div");
-  flash.classList.add("lightning-flash");
+   // random angle for realism
+   lightning.style.transform = `translate(-50%, -50%) rotate(${
+     Math.random() * 40 - 20
+   }deg)`;
 
-  lightning.appendChild(flash);
+   // create bolt + glow
+   const bolt = document.createElement("div");
+   bolt.className = "lightning-bolt";
 
-  setTimeout(() => flash.remove(), 400);
+   const glow = document.createElement("div");
+   glow.className = "lightning-glow";
+
+   lightning.appendChild(bolt);
+   lightning.appendChild(glow);
+   document.body.appendChild(lightning);
+
+   setTimeout(() => lightning.remove(), 300);
 }
 
 //***** Generate questions randomly */ 
@@ -308,7 +319,7 @@ function getRandomQuestion(array){
 }
 
 //***** Logic for click classic button *****/
-classic.onclick= function(){
+function showQuestions(){
    const shuffled = getRandomQuestion([...allQuestions]);
    selectedQuestions.push(...shuffled.slice(0,10));
     switchScreen(mainDisplay, displayQuiz);

@@ -318,29 +318,65 @@ body{
     color: rgba(255, 255, 255, 0.7);
 
 }
+/* Container */
 .lightning-effect {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 0;
-  height: 0;
-  transform: translate(-50%, -50%);
   pointer-events: none;
   z-index: 1000;
+  transform: translate(-50%, -50%) rotate(0deg);
 }
 
-.lightning-flash {
-  width: 200px;
-  height: 200px;
-  background: radial-gradient(circle, rgba(255,255,0,0.8), rgba(255,255,0,0) 70%);
+/* Lightning bolt shape */
+.lightning-bolt {
+  width: 4px;
+  height: 180px;
+  background: linear-gradient(
+    to bottom,
+    #ffffff,
+    #a7f6ff,
+    #6ee7ff,
+    transparent
+  );
+  clip-path: polygon(
+    50% 0%, 60% 20%, 40% 20%, 55% 45%, 
+    35% 45%, 50% 70%, 30% 70%, 45% 100%
+  );
+  filter: drop-shadow(0 0 10px #7dfbff) drop-shadow(0 0 25px #ffffff);
+  animation: strike 0.18s linear forwards;
+}
+
+/* Burst glow */
+.lightning-glow {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(
+    circle,
+    rgba(255,255,255,0.9),
+    rgba(0,195,255,0.3),
+    rgba(0,195,255,0) 70%
+  );
   border-radius: 50%;
-  animation: flash 0.4s ease-out;
+  transform: translate(-50%, -50%) scale(0.2);
+  animation: glow-burst 0.35s ease-out forwards;
+  filter: blur(2px);
 }
 
-@keyframes flash {
-  0% { transform: scale(0.2); opacity: 1; }
-  100% { transform: scale(1.5); opacity: 0; }
+/* ⚡ Lightning strike animation */
+@keyframes strike {
+  0% { opacity: 0; transform: scaleY(0.2); }
+  50% { opacity: 1; transform: scaleY(1.2); }
+  100% { opacity: 0; transform: scaleY(0.1); }
 }
+
+/* 💥 Flash explosion animation */
+@keyframes glow-burst {
+  0% { opacity: 1; transform: scale(0.3); }
+  100% { opacity: 0; transform: scale(1.8); }
+}
+
 .health-container {
   width: 100%;
   background: #3f3f46;
