@@ -66,7 +66,7 @@ body{
     backface-visibility: hidden;
     transform-style: preserve-3d;
     /* transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55); */
-    overflow-y: auto;
+    /* overflow:scroll; */
     animation: floatScreen 6s ease-in-out infinite;
     opacity: 0;
     /* transform: translateY(60px) scale(0.98); */
@@ -82,7 +82,7 @@ body{
 }
 .screen.active {
     opacity: 1;
-    transform: translateY(-5px) translateX(0) scale(1);
+    transform: translateY(-1px) translateX(0) scale(1);
     filter: blur(0px);
     pointer-events: auto;
     /* animation: floatScreen 5s ease-in-out infinite; */
@@ -136,7 +136,7 @@ body{
     margin-bottom: 20px;
     text-shadow: 0 0 30px rgba(138, 43, 226, 0.5);
     position: relative;
-    animation: move 3s linear infinite;
+    animation: 5s ease 1s infinite alternate both move;
 }
 @keyframes move {
   0% { transform: scale(0.8); opacity: 1; }
@@ -399,13 +399,23 @@ body{
   transform: translateX(-50%);
   width: 120px;
   height: 120px;
-  background: url("https://tenor.com/en-GB/view/%CF%86%CF%89%CF%84%CE%B9%CE%AC-%CE%BC-gif-2547782084576614177") center/cover;
+  background: url("./images/φωτιά-μ.gif") center/cover;
   display: none;
   z-index: 500;
 }
+.celebration-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 2000;
+}
 
 .quiz-scores-display{
-       display: flex;
+    display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
@@ -689,7 +699,11 @@ body{
     margin-top: 20px;
 }
 .final-score-btn{
+    justify-content: center;
+     width: fit-content;   
+    margin: auto;
     display: grid;
+    gap: 10px;
     grid-template-columns: repeat(2, 1fr) ;
 }
 @media (max-width: 900px) {
@@ -718,6 +732,9 @@ body{
     
 }
 @media (max-width:  420px){
+    body{
+        overflow: auto;
+    }
     .container{
     display: grid;
     grid-template-columns: repeat(1, 1fr); 
@@ -737,7 +754,7 @@ body{
 }
 .final-score-btn{
     display: grid;
-    grid-template-columns: repeat(1, 1fr) ;
+    grid-template-columns: repeat(1 , 1fr) ;
 }
     
 }

@@ -257,6 +257,56 @@ document.addEventListener('DOMContentLoaded',()=>{
    createStar(".stars-fast", 70, 3, 5, 10, 90);
 })
 
+function celebrate() {
+  const container = document.createElement("div");
+  container.classList.add("celebration-container");
+  document.body.appendChild(container);
+
+  // Explosion effect
+  const explosion = document.createElement("div");
+  explosion.className = "explosion";
+  explosion.style.left = "50%";
+  explosion.style.top = "50%";
+  container.appendChild(explosion);
+
+  // Stars burst
+  for (let i = 0; i < 6; i++) {
+    const star = document.createElement("div");
+    star.className = "star-burst";
+    star.style.left = 50 + Math.random() * 20 - 10 + "%";
+    star.style.top = 50 + Math.random() * 20 - 10 + "%";
+    container.appendChild(star);
+  }
+
+  // Confetti
+  for (let i = 0; i < 25; i++) {
+    const confetti = document.createElement("div");
+    confetti.classList.add("confetti");
+
+    confetti.style.left = Math.random() * 100 + "%";
+    confetti.style.setProperty("--rotate", Math.random() * 360 + "deg");
+
+    // random colors
+    const colors = [
+      "#ff6ec7",
+      "#66ffa6",
+      "#4fc3f7",
+      "#ffd93d",
+      "#ff5e5e",
+      "#a78bfa",
+    ];
+    confetti.style.setProperty(
+      "--color",
+      colors[Math.floor(Math.random() * colors.length)]
+    );
+
+    container.appendChild(confetti);
+  }
+
+  setTimeout(() => container.remove(), 1800);
+}
+
+
 //**** streack fire ****/ 
 
 function updateComboFire() {
@@ -423,6 +473,7 @@ function handleAnswer(selectedIndex){
       streak++;
       answerButtons.forEach((btn) => btn.classList.remove("correct", "wrong"));
        answerButtons[selectedIndex].classList.add("correct");
+       celebrate();
       triggerLightning();  
     } else {
       streak = 0;
